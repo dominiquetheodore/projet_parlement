@@ -1,17 +1,17 @@
-*.pyc:
+*.pyc
 
-pdf/*.pdf:
-txt/*.txt:
-static/pdf/*.pdf:
-static/txt/*.txt:
-static/img/*.png:
+pdf/*.pdf
+txt/*.txt
+static/pdf/*.pdf
+static/txt/*.txt
+static/img/*.png
 
 # Database #
 ######################
-*.db:
+*.db
 
 # OS generated files #
 ######################
-.DS_Store:
-.DS_Store?:
+.DS_Store
+.DS_Store?
 
