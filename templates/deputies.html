@@ -1,0 +1,23 @@
+{% block content %}
+<h1>Deputies</h1>
+<hr>
+<ul>
+{% for a in alpha %}
+	<li>{{ a }}</li>
+{% endfor %}
+</ul>
+
+{% for dep in deputies %}
+<div class="deputy">
+<div class="row">
+	<a class="btn btn-success btn-xs" role="button" href="{{url_for('showPQbyDeputy', name = dep.asked_by )}}">Show all</a>
+</div>
+<b>Name: </b>{{ dep.asked_by  }}
+<br>
+<b>PQs asked: </b>{{ dep.number }}
+<br>
+<hr>
+</div>
+{% endfor %}
+
+{% endblock %}

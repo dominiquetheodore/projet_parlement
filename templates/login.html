@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://use.fontawesome.com/aef1209c87.js"></script>
+        <script src="//apis.google.com/js/platform.js?onload=start"> </script>
+
+        <style>
+        body {
+          margin-top: 70px;
+        }
+        </style>
+  </head>
+  
+  <body>
+  <div class="container" style="margin-top:10px;">  
+<div class="jumbotron text-center">
+<!-- GOOGLE PLUS SIGN IN-->
+    <h1>Login/Sign up</h1> 
+          <div id="signInButton" class="btn btn-lg">
+          <span class="g-signin"
+            data-scope="openid email"
+            data-clientid="1035904890384-ike5ctcgjsvr4jasep52a97ki05efock.apps.googleusercontent.com"
+            data-redirecturi="postmessage"
+            data-accesstype="offline"
+            data-cookiepolicy="single_host_origin"
+            data-callback="signInCallback"
+            data-approvalprompt="force">
+          </span>
+        </div>
+
+        <fb:login-button
+          scope="public_profile,email"
+          onlogin="sendTokenToServer();">
+        </fb:login-button>
+
+        <script type="in/Login"></script>
+  </div>
+</div>
+
+<div id="result"></div>
+
+<script>
+function signInCallback(authResult) {
+  if (authResult['code']) {
+
+    // Hide the sign-in button now that the user is authorized
+    $('#signinButton').attr('style', 'display: none');
+
+    // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
+    $.ajax({
+      type: 'POST',
+      url: '/gconnect?state={{STATE}}',
+      processData: false,
+      data: authResult['code'],
+      contentType: 'application/octet-stream; charset=utf-8',
+      success: function(result) {
+        // Handle or verify the server response if necessary.
+        if (result) {
+          $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+         setTimeout(function() {
+          window.location.href = "/";
+         }, 4000);
+          
+
+      } else if (authResult['error']) {
+
+    console.log('There was an error: ' + authResult['error']);
+  } else {
+        $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+         }
+
+      }
+      
+  }); } }
+</script>
+<!--END GOOGLE PLUS SIGN IN -->
+
+
+    </div>
+    <!-- /.container -->
+
+  </body>
+</html>

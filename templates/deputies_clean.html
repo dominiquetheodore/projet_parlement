@@ -1,0 +1,59 @@
+{% extends "blank.html" %}
+{% set active_page = "deputies" %}
+{% block content %}
+<script>
+  $(document).ready(function(){
+    //post to save_event.php and save to database
+    $.post("/constituencies/JSON", {
+
+    }).done (function (data) {
+      constituencies = data.Constituencies;
+      constituencies.forEach(function(constituency){
+          $('#constituencies').append('<option value="'+constituency.id+'">'+constituency.id + ' - ' + constituency.constituency+'</option>');
+        });
+    });
+
+    $('#constituencies').change(function(){
+      $('#change_option').submit();
+    });
+
+  });
+</script>
+<h1>Les députés</h1>
+<hr>
+<div class="row">
+<div class="col-lg-6 clear-right">
+<form id="change_option" action="{{url_for('deputiesbyconstituency')}}" method="POST">
+<select id="constituencies" name="constituencies" class="form-control">
+	<option value="none">Par circonscription...</option>
+</select>
+</form>
+</div>
+</div>
+<br><br>
+{% for a in alpha %}
+	<b><a style="margin-left:10px;font-weight:bold;" href="#{{ a }}">{{ a }}</a></b>
+{% endfor %}
+<br>
+
+<div class="col-lg-8">
+{% for a in alpha %}
+{% if deps[a] != 'nothing' %}
+  <div class="row">
+	 <a name="{{ a }}"></a><h1>{{ a }}</h1>
+    <hr>
+  </div>
+  {% for dep in deps[a] %}
+    <div>
+    <img src="{{ url_for('static', filename='img/'+ dep.id + '.png') }}" style="width:130px;display:inline;" />
+    <h4>{{ dep.id }}</h4>
+    <a href="{{url_for('pqnewdep', name = dep.name, title=dep.title )}}"><h4>{{ dep.name}}, {{ dep.first_name}}</h4></a>
+    <p>{{ dep.zone }}</p>
+    <span style="font-weight:bold; color:{{ dep.party.color }};"> {{ dep.party.name }}</span>
+    <hr>
+    </div>
+	{% endfor %}
+{% endif %}
+{% endfor %}
+</div>
+{% endblock %}

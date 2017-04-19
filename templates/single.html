@@ -1,0 +1,35 @@
+{% extends "blank.html" %}
+
+{% block content %}
+<h1>{{ pq.title }}</h1>
+<hr>
+<div class = 'flash'>
+	{% with messages = get_flashed_messages() %}
+      {% if messages %}
+          
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+</div>
+<div class="pq col-lg-8">
+{% if logged_in %}
+<a class="btn btn-danger" role="button" href="{{url_for('editPQ', id = pq.id )}}">Edit</a>
+{% endif %}
+
+<br><br>
+<b>Date: </b>{{ pq.date_asked }}
+<br>
+<b>From: </b>{{ pq.asked_by }}
+<br><br>
+<b>To: </b>{{ pq.asked_to }}
+<br><br>
+<b>PQ: </b><pre>{{ pq.pq }}</pre>
+<br><br>
+<b>Answer: </b><pre>{{ pq.answer }}</pre>
+<hr>
+</div>
+{% endblock %}

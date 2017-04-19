@@ -1,0 +1,9 @@
+rm PQs.db
+python database_setup.py
+python constituencies.py
+python parties.py
+python deputies.py
+python lotsofpqs.py
+python lotsofpnqs.py
+python users.py
+python count_pqs.py

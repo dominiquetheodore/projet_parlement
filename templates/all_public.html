@@ -1,0 +1,94 @@
+{% extends "blank.html" %}
+{% set active_page = "pqs" %}
+{% block content %}
+<script>
+  $(document).ready(function(){
+    $('#sessions').change(function(){
+      $('#change_option').submit();
+    });
+
+  });
+</script>
+
+<div class="row">
+	<div class="col-lg-12">
+		<h1>Les dernières questions parlementaires</h1>
+		<hr>
+	</div>
+</div>
+
+<canvas id="hart" width="0" height="0"></canvas>
+
+<div class="col-lg-3">
+  <form id="change_option" action="{{url_for('pqsbysession')}}" method="POST">
+  <select name="sessions" id="sessions" class="form-control">
+  <option>Par séance...</option>
+  {% for session in sessions %}
+  <option value="{{ session.date }}">{{ session.date.strftime('%d %B %Y') }}</option>
+  {% endfor %}
+  </select>
+  </form>
+</div>
+
+<div class="col-lg-8">
+{% for pq in pqs %}
+		<a href="{{url_for('showPQ', id=pq.id )}}"><h4 style="display:inline;">{{ pq.title }}</h4></a>
+      <span>{{ pq.date_asked }}</span>
+    <hr>
+		<b>From: </b>{{ pq.asked_by }}
+		<br>
+		<b>To: </b>{{ pq.asked_to }}
+		<br><br>
+		<b>PQ: </b>{{ pq.pq }}
+		<br><br>
+		<b>Answer: </b>
+    {% if pq.answer | length > 500 %}
+        {{ pq.answer[:500] }}... 
+    {% else %}
+        {{ pq.answer }}
+    {% endif %}
+	  <hr>
+{% endfor %}
+</div>
+
+<script>
+   // bar chart data
+   var barData = {
+   labels : [{% for item in labels %}
+                  "{{item}}",
+              {% endfor %}],
+   datasets : [
+      {
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+         data : [{% for item in values %}
+                      {{item}},
+                    {% endfor %}]
+      }
+      ]
+   }
+ 
+   // get bar chart canvas
+   var mychart = document.getElementById("chart").getContext("2d");
+ 
+   steps = 5
+   max = 80
+   // draw bar chart
+   new Chart(mychart).Line(barData, {
+        scaleOverride: true,
+        scaleSteps: steps,
+        scaleStepWidth: Math.ceil(max / steps),
+        scaleStartValue: 0,
+        scaleShowVerticalLines: true,
+        pointHitDetectionRadius : 3,
+        scaleShowGridLines : true,
+        bezierCurve: false,
+        radius: 1,
+        barShowStroke : true,
+        scaleShowLabels: true
+   });
+ 
+</script>
+
+{% endblock %}

@@ -1,0 +1,168 @@
+{% extends "blank.html" %}
+{% block content %}
+<header class="image-bg-fluid-height">
+    </header>
+<div class="jumbotron">
+    <div class="form-group">
+        <input name="search_term" type="text" class="form-control input-lg" placeholder="Trouver mon député...">
+    </div>
+</div>
+<div class="col-lg-12">
+  <h1>Les dernieres questions</h1>
+  <hr>
+</div>
+
+<div class="col-lg-6">
+<div class="panel panel-default">
+<div class="panel-body">
+  {% for pq in pqs %}
+    {% if pq.pq | length > 300 %}
+          <a href="{{url_for('showPQ', id = pq.id )}}">{{ pq.title }}</a><br>
+          {{ pq.pq[:300] }}... 
+    {% else %}
+          {{ pq.pq }}
+    {% endif %}
+    <hr>
+  {% endfor %}
+</div>
+</div>
+</div>
+
+<div class="col-lg-6">
+  <h2>Activité parlementaire</h2>
+  <hr>
+    <canvas id="canvas" width="800" height="500"></canvas>
+</div>
+
+
+<div class="col-lg-6" style="margin-top:-40px;margin-bottom:30px;">
+  <h2>Les mots clés</h2>
+  <hr>
+  {% for tag in tags2 %}
+    {% if tag[1] == 'isbold' %}
+    <span data-toggle="tooltip" data-container="body" title="{{ tag[0] }}" style="font-size:14px; display:inline; border-bottom: 1px dotted #000; margin-right:5px;" class="tag">{{ tag[0] }}</span>
+    {% else %}
+      <span data-toggle="tooltip" data-container="body" title="{{ tag[0] }}" style="text-decoration:bold;font-size:20px; display:inline; border-bottom: 1px dotted #000; margin-right:5px;" class="tag">{{ tag[0] }}</span>
+    {% endif %}
+  {% endfor %}
+  <br>
+  <div class="row pull-right">
+    <a href="{{ url_for('alltags')}}">Voir tous les mots clés</a>
+  </div>
+</div>
+
+<form id="myform" action="{{ url_for('search') }}" class="navbar-form navbar-left" method="POST">
+  <input id="search_term" name="search_term" type="hidden" value="gfg" />
+  <input id="s" style="display:none;" type="submit" />
+</form>
+
+<script>
+$('.tag').click(function(e){
+  e.preventDefault();
+  var text = $(e.target).text();
+  $('#search_term').val(text);
+  $('#s').click();
+});
+</script>
+
+<script>
+   $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+  });
+
+   var barChartData = {
+            labels: [{% for item in labels %}
+                  "{{item}}",
+              {% endfor %}],
+            datasets: [
+              {% for d in data %}
+                {
+                    label: "{{ d }}",
+                        type:'bar',
+                        data: [{% for item in data[d] %}
+                      "{{item}}",
+                      {% endfor %}],
+                        fill: false,
+                        borderColor: '{{ colors[d] }}',
+                        backgroundColor: '{{ colors[d] }}',
+                        pointBorderColor: '{{ colors[d] }}',
+                        pointBackgroundColor: '{{ colors[d] }}',
+                        pointHoverBackgroundColor: '{{ colors[d] }}',
+                        pointHoverBorderColor: '{{ colors[d] }}',
+                        yAxisID: 'y-axis-1'
+                },
+              {% endfor %}
+
+            ],
+            options: {
+                xAxes: [{
+                  stacked: true
+                }],
+                yAxes: [{
+                  stacked: true
+                }]
+            }
+    };
+        
+        window.onload = function() {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                responsive: true,
+                tooltips: {
+                  mode: 'label'
+              },
+              elements: {
+                line: {
+                    fill: false
+                }
+            },
+              scales: {
+                xAxes: [{
+                    display: true,
+                    stacked: true,
+                    gridLines: {
+                        display: false
+                    },
+                    labels: {
+                        show: true,
+                    }
+                }],
+                yAxes: [{
+                    type: "linear",
+                    stacked: true,
+                    display: true,
+                    position: "left",
+                    id: "y-axis-1",
+                    scaleLabel: {
+                  display: false
+                },
+                    gridLines:{
+                        display: false
+                    },
+                    labels: {
+                        show:true,                       
+                    }
+                }, {
+                    type: "linear",
+                    display: true,
+                    stacked: true,
+                    position: "right",
+                    id: "y-axis-2",
+                    gridLines:{
+                        display: false
+                    },
+                    labels: {
+                        show:true,
+                        
+                    }
+                }]
+            }
+            }
+            });
+        };
+</script>
+
+{% endblock %}

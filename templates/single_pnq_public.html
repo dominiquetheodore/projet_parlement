@@ -1,0 +1,16 @@
+{% extends "blank.html" %}
+
+{% block content %}
+<h1>{{ pnq.title }}</h1>
+<hr>
+
+<div class="pnq col-lg-8">
+<br><br>
+<b>Date: </b>{{ pnq.session.date }}
+<br><br>
+<b>Q: </b>{{ pnq.pnq }}
+<br><br>
+<b>A:</b><pre>{{ pnq.answer }}</pre>
+<hr>
+</div>
+{% endblock %}

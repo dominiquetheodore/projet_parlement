@@ -1,0 +1,110 @@
+* {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size:12px;
+    border-radius: 0px!important;
+}
+
+h1 { 
+    font-size:24px!important;
+}
+
+h2 { 
+    font-size:20px!important;
+}
+
+.panel-body  {
+    word-break:break-all
+}
+
+.navbar-default {
+    background-color: #bb0000;
+    border-color: #bb0000;
+}
+.navbar-default .navbar-nav > li > a {
+    color: #ffffff;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    background-color: #E66E6E;
+    color: #ffffff;
+}
+
+.navbar-brand {
+	font-color: white!important;
+    font-size:16px;
+}
+
+/* enable absolute positioning */
+.inner-addon { 
+    position: relative; 
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+.image-bg-fluid-height,
+.image-bg-fixed-height {
+    text-align: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.image-bg-fluid-height {
+    background: url('https://previews.123rf.com/images/kgtoh/kgtoh0908/kgtoh090800107/5361169-Word-cloud-concept-illustration-of-democracy-political-Stock-Illustration.jpg') no-repeat center center scroll;
+    padding: 100px 0;
+}
+
+.image-bg-fixed-height {
+    background: url('https://previews.123rf.com/images/kgtoh/kgtoh0908/kgtoh090800107/5361169-Word-cloud-concept-illustration-of-democracy-political-Stock-Illustration.jpg') no-repeat center center scroll;
+    height: 450px;
+}
+
+.img-center {
+    margin: 0 auto;
+}
+
+/* directory list styles */
+.people-list {
+  display: block;
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px auto;
+  border: 2px solid #eee;
+}
+a.people-list:hover {
+  background-color: #eee;
+  text-decoration: none;
+}
+.portrait,
+.name {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px;
+}
+.name h4 {
+  color: #00654e;
+}
+.name h5 {
+  color: #000;
+}
+
+pre {
+    font-family: 'Roboto', sans-serif;
+    white-space: pre-wrap;
+    background-color: white!important;
+    border: 0px solid #ccc;
+}

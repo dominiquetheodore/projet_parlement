@@ -1,0 +1,13 @@
+{% extends "blank.html" %}
+{% set active_page = "deputies" %}
+{% block content %}
+  <h1>No. {{ constituency_no }}: {{ constituency }}</h1>
+  <hr>
+  <ul>
+  {% for deputy in deputies %}
+	<a href="{{url_for('pqnewdep', name = deputy.name, title=deputy.title )}}"><h4>{{ deputy.name}}, {{ deputy.first_name}}</h4></a>
+	<span style="font-weight:bold; color:{{ deputy.party.color }};"> {{ deputy.party.name }}</span>
+	<hr>
+  {% endfor %}
+  </ul>
+{% endblock %}

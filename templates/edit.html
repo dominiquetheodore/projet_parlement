@@ -1,0 +1,39 @@
+{% extends "blank.html" %}
+{% block content %}
+<h1>Edit PQ</h1>
+<hr>
+<form action="{{ url_for('editPQ',id = pq.id)}}" method = "post">
+	<input class="btn btn-success" type="submit" value="Save" />
+	<button type="button" onclick="del()" class="btn btn-danger">Delete</button>
+	<a href="{{ url_for('showPQ',id = pq.id)}}" class="btn btn-default">Cancel</a>
+	<br><br>
+	<div class="pq col-lg-8">
+	<b>Title: </b><input class="form-control" name="title" id="date" size="35" value="{{ pq.title }}"/>
+	<br>
+	<b>Date: </b><input class="form-control" id="date" size="35" value="{{ pq.date_asked }}"/>
+	<br>
+	<b>From: </b><input class="form-control" id="date" size="70" value="{{ pq.asked_by }}" />
+	<br>
+	<b>To: </b><input class="form-control" id="date" size="70" value="{{ pq.asked_to }}" />
+	<br>
+	<b>PQ: </b><br>
+	<textarea class="form-control" name="pq" cols="100" rows="12">{{ pq.pq }}</textarea>
+	<hr>
+	</div>
+</form>
+
+<form id="deleteForm" action="{{ url_for('deletePQ',id = pq.id)}}" method = "post">
+</form>
+
+<script>
+function del(){
+	if(confirm('Are you sure?')){
+		document.getElementById('deleteForm').submit();
+	}
+	else
+	{
+		return false;
+	}
+}
+</script>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "blank.html" %}
+{% block content %}
+<h2>Tous les mots clés de l'Assemblée</h2>   <!--Load the AJAX API-->  
+<hr>
+<div class="col-lg-12">
+{% for tag in tags %}
+  <span style="font-size:16px; display:inline; border-bottom: 1px dotted #000; margin-right:5px;" class="tag">{{ tag }}</span>
+{% endfor %}
+</div>
+
+<form id="myform" action="{{ url_for('search') }}" class="navbar-form navbar-left" method="POST">
+  <input id="search_term" name="search_term" type="hidden" value="gfg" />
+  <input id="s" type="submit" />
+</form>
+
+<script>
+$('.tag').click(function(e){
+  e.preventDefault();
+  var text = $(e.target).text();
+  $('#search_term').val(text);
+  $('#s').click();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "blank.html" %}
+
+{% block content %}
+<h1>{{ pq.title }}</h1>
+<hr>
+<div class="col-md-12">
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<ul>
+				{% for message in messages %}
+					 <li> <strong> {{ message }} </strong> </li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+	{% endwith %}
+</div>
+<div class="pq col-lg-8">
+<br><br>
+<b>Date: </b>{{ pq.date_asked }}
+<br>
+<b>From: </b>{{ pq.asked_by }}
+<br>
+<b>To: </b>{{ pq.asked_to }}
+<br><br>
+<b>PQ: </b>{{ pq.pq }}
+<br><br>
+<b>Answer: </b>{{ pq.answer }}
+<hr>
+</div>
+{% endblock %}

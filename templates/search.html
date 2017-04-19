@@ -1,0 +1,28 @@
+{% extends "blank.html" %}
+
+{% block content %}
+<h1>Search results for '{{ search }}'
+{% if deputies.count() > 0 %}
+<h2>Deputies ({{ deputies.count() }})</h2>
+	{% for dep in deputies %}
+	<div class="deputy">
+	<b>Name: </b><a href="{{url_for('pqnewdep', name = dep.name, title=dep.title )}}">{{ dep.name  }}</a>
+	<br>
+	<b>First Name: </b>{{ dep.first_name  }}
+	<br>
+	<hr>
+	</div>
+	{% endfor %}
+{% endif %}
+
+{% if pqs.count() > 0 %}
+<h2>PQs ({{ pqs.count() }})</h2>
+{% for pq in pqs %}
+<div class="deputy">
+		<h4><a href="{{url_for('showPQ', id = pq.id )}}">{{ pq.title }}</a></h4>
+		<b>PQ: </b>{{ pq.pq }}
+		<hr>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}

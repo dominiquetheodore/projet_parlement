@@ -1,0 +1,100 @@
+{% extends "blank.html" %}
+{% set active_page = "deputies" %}
+{% block content %}
+<h2>{{ name }}</h2>   <!--Load the AJAX API-->  
+<hr>
+<input id="deputy_id" type="hidden" value="{{ deputy_id }}" />
+<br>
+<div style="margin:auto;">
+{% if wordcloud is defined %}
+<img src="{{ url_for('static', filename='wordclouds/'+ name + '.png') }}" height="100px" />
+{% endif %}
+</div>
+<b>{{ title }}</b><br>
+<b>PQs answered: <span>{{ count }}</span></b>
+<hr>
+<img src="{{ url_for('static', filename='img/'+ deputy_id + '.png') }}" style="width:300px;display:inline;" />
+<br><br>
+<canvas id="chart" width="600" height="200"></canvas><br>
+<div class="col-lg-8">
+{% for pq in pqs %}
+<div class="panel">
+<div class="panel-body">
+	<a class="btn btn-success btn-xs" role="button" href="{{url_for('showPQ', id = pq.id )}}">View</a>
+	<a class="btn btn-danger btn-xs" role="button" href="{{url_for('editPQ', id = pq.id )}}">Edit</a>
+<div class="pq">
+<h4>{{ pq.title }}</h4>
+<b>Date: </b>{{ pq.date_asked }}
+<br>
+<b>From: </b>{{ pq.asked_by }}
+<br>
+<b>To: </b>{{ pq.asked_to }}
+<br><br>
+<b>PQ: </b>{{ pq.pq }}
+</div>
+</div>
+</div>
+{% endfor %}
+</div>
+<h4>Tags</h4>
+{% for pq in pqs %}
+{{ pq.title }}
+{% endfor %}
+
+<script>
+    // bar chart data
+   var barData = {
+   labels : [{% for item in labels %}
+                  "{{item}}",
+              {% endfor %}],
+   datasets : [
+      { 
+            backgroundColor: "#011FB6",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+         data : [{% for item in values %}
+                      {{item}},
+                    {% endfor %}]
+      }
+      ]
+   }
+ 
+   // get bar chart canvas
+   var mychart = document.getElementById("chart").getContext("2d");
+ 
+   steps = 10
+   max = 5
+
+   // draw bar chart
+   var chart = new Chart(mychart, {
+        type: "bar",
+        data: barData,
+        options: {
+             legend: {
+                display: false
+             },
+             bezierCurve: false,
+             elements: {
+                line: {
+                    tension: 0
+                }
+            }
+        },
+        scaleOverride: true,
+        scaleSteps: steps,
+        scaleStepWidth: Math.ceil(max / steps),
+        scaleStartValue: 0,
+        scaleShowVerticalLines: true,
+        pointHitDetectionRadius : 3,
+        scaleShowGridLines : true,
+        
+        radius: 1,
+        barShowStroke : true,
+        scaleShowLabels: true
+   });
+ 
+ 
+</script>
+
+{% endblock %}
