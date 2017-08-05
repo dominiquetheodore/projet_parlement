@@ -30,6 +30,8 @@ pattern2 = r'aaaaa'
 
 all_text_files = [f for f in listdir('./pnq') if isfile(join('./txt', f))]
 
+# all_text_files.remove('.gitkeep')
+
 if exists(join('./pnq','.DS_Store')):
 	remove(join('./pnq','.DS_Store'))
 

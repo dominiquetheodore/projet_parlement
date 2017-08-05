@@ -41,5 +41,4 @@ for file in all_text_files:
 
 	for match in regex.finditer(buffer):
 		pqs.append({"PQ ref": match.group(2), "Date": date.strftime("%B %d, %Y"), "From": match.group(3), "To": match.group(4), "PQ": match.group(1)})
-
-print pqs
+#print pqs

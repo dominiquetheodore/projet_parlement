@@ -1,0 +1,40 @@
+{% extends "blank.html" %}
+{% set active_page = "deputies" %}
+{% block content %}
+<script>
+/*
+  $(document).ready(function(){
+    //post to save_event.php and save to database
+    $.post("/constituencies/JSON", {
+
+    }).done (function (data) {
+      constituencies = data.Constituencies;
+      constituencies.forEach(function(constituency){
+          $('#constituencies').append('<option value="'+constituency.id+'">'+constituency.id + ' - ' + constituency.constituency+'</option>');
+        });
+    });
+
+    $('#constituencies').change(function(){
+      $('#change_option').submit();
+    });
+
+  });
+*/
+</script>
+<h1>Les députés</h1>
+
+{% for dep in deputies %}
+<div class="deputy">
+<div class="row">
+	<a class="btn btn-success btn-xs" role="button" href="{{url_for('pqnewdep', name = dep.name, title=dep.title )}}">Show all</a>
+</div>
+    <img src="{{ url_for('static', filename='img/'+ dep.id|string + '.png') }}" style="width:130px;display:inline;" />
+
+<b>Name: </b>{{ dep.name  }}
+<br>
+<b>PQs asked: </b>{{ dep.number }}
+<br>
+<hr>
+</div>
+{% endfor %}
+{% endblock %}

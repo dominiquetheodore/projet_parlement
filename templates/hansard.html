@@ -8,6 +8,21 @@
 	</div>
 </div>
 <div class="col-lg-6">
+  <h1>2017</h1>
+  <table class="table table-responsive">
+  <tbody>
+  {% for session in sessions %}
+  {% if session.date.strftime('%Y') == '2017' %}
+  <tr>
+    <td style="width:200px;">{{ session.date.strftime('%d %B %Y') }}</td>
+    <td style="width:100px;"><a href="{{ url_for('static', filename='pdf/'+ session.date.strftime('%Y%m%d') + '.pdf') }}">PDF</a></td>
+    <td><a href="{{ url_for('static', filename='txt/'+ session.date.strftime('%Y%m%d') + '.txt') }}">TXT</a></td>
+  </tr>
+  {% endif %}
+  {% endfor %}
+  </tbody>
+  </table>
+  <hr>
   <h1>2016</h1>
   <table class="table table-responsive">
   <tbody>

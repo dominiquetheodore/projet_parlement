@@ -29,6 +29,8 @@ pattern = r'((\(No\.[\s]*B\/[0-9]*\))(.*?)asked(.*?)whether(.*?)\.(.*?))'
 
 all_text_files = [f for f in listdir('./txt') if isfile(join('./txt', f))]
 
+# all_text_files.remove('.gitkeep')
+
 if exists(join('./txt','.DS_Store')):
 	remove(join('./txt','.DS_Store'))
 
@@ -57,7 +59,11 @@ for i, file in enumerate(all_text_files):
 		asked_by = unicode(match.group(3), "utf-8")
 		asked_by = asked_by.replace("\n", "")
 		asked_by = ' '.join(filter(None,asked_by.split(' ')))
-		asked_pattern = asked_by.index('(')
+                print asked_by
+		if (asked_by.index('(')):
+			asked_pattern = asked_by.index('(')
+		else:
+			break
 		tit = asked_by[asked_pattern+1:]
 		tit = tit[:-1]
 
@@ -76,13 +82,13 @@ for i, file in enumerate(all_text_files):
 			end_point = re.search(exp, answer).start()
 			answer = answer[1:end_point]
 
-		pq1 = PQ(title=unicode(title,"utf-8"), pq_ref=unicode(match.group(2), "utf-8"), session=new_session, deputy=deputy,
+		pq1 = PQ(title=unicode(title,"utf-8", errors='ignore'), pq_ref=unicode(match.group(2), "utf-8", errors='ignore'), session=new_session, deputy=deputy,
 					file_name=text_file, 
 					answer = unicode(answer,"utf-8",errors='ignore'),
-					pq=unicode(match.group(1), "utf-8"), 
-					date_asked=unicode(date.strftime("%B %d, %Y"), "utf-8"), 
+					pq=unicode(match.group(1), "utf-8", errors='ignore'), 
+					date_asked=unicode(date.strftime("%B %d, %Y"), "utf-8", errors='ignore'), 
 					asked_by=asked_by, 
-					asked_to=unicode(match.group(4), "utf-8")
+					asked_to=unicode(match.group(4), "utf-8", errors='ignore')
 				)
 		session.add(pq1)
 		session.commit()
